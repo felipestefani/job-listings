@@ -16,22 +16,41 @@
     const removeFilter = job_filter_remove => {
         filter.value = filter.value.filter(item => item!==job_filter_remove)
     }
+
+    const clear = () => { filter.value = []}
+
+    const allFilter = job => {
+        let fullList = []
+        fullList.value = [job.role, job.level, ...job.languages]
+        if(filter.value.length <= 0) {
+            return true
+        } else {
+            const tamanho = filter.value.filter( item => {
+                return fullList.value.includes(item)
+            })
+            return tamanho.length == filter.value.length
+        }
+    }
+
 </script>
 
 <template>
     <div class="container">
         <header>
             <img src="./assets/images/bg-header-desktop.svg" alt="desktop header backgound">
-            <div class="filter"  v-if="filter.length >=1">
+            <div class="filter"  v-if="filter.length >=1 ">
                 <ul class="list_filter">
-                    <li v-for="item in filter">{{ item }} <button @click="removeFilter(item)"><img src="./assets/images/icon-remove.svg" alt=""></button> </li>
+                    <div class="items_filter">
+                        <li v-for="item in filter">{{ item }} <button @click="removeFilter(item)"><img src="./assets/images/icon-remove.svg" alt=""></button></li>
+                    </div>
+                    <button class="clear" @click="clear">Clear</button>
                 </ul>
             </div>
         </header>
         <main>
             <div>
                 <ul class="jobs">
-                    <li class="job_li" v-for="job in jobs" :key="job.id">
+                    <li class="job_li" v-for="job in jobs" :key="job.id" :hidden="!allFilter(job)">
                         <div class="job">
                             <div class="job_description">
                                 <div class="line" :class="{line_green: job.new && job.featured}"></div>
@@ -71,6 +90,8 @@
 <style scoped>
     .container {
         background-color: var(--light-grayish-cyan-background);
+        min-height: 100vh;
+        position: relative;
     }
     header {
         position: relative;
@@ -91,6 +112,7 @@
     .list_filter{
         position: absolute;
         display: flex;
+        justify-content: space-between;
         bottom: -2em;
         left: 50%;
         transform: translate(-50%,0);
@@ -101,6 +123,9 @@
         max-width: 80em;
         min-width: 45em;
         padding: 0.5em;
+    }
+    .items_filter{
+        display: flex;
     }
     .list_filter li{
         color: var(--desaturated-dark-cyan);
@@ -114,6 +139,10 @@
         border: none;
         background: none;
     }
+    .clear{
+        margin-right: 2em;
+        color: var(--dark-grayish-cyan);
+    }
     button img {
         height: 100%;
     }
@@ -122,7 +151,7 @@
         display: flex;
         flex-direction: column;
         align-items: center; 
-        padding-top: 3em;
+        padding: 3em 0;
     }
     .job_li {
         background-color: #FFF;
@@ -223,10 +252,33 @@
         padding: 0.5em;
         margin: 0.5em;
     }
-    .attribution { font-size: 11px; text-align: center; }
+    .attribution { 
+        position: absolute;
+        bottom: 1em;
+        left: 50%;
+        transform: translate(-50%, 0);
+        font-size: 11px; 
+        text-align: center; 
+        
+    }
     .attribution a { color: hsl(228, 45%, 44%); }
 
-    .job_skills span:hover{
+    button img:hover {
         cursor: pointer;
     }
+    .clear:hover {
+        color: var(--desaturated-dark-cyan);
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    p:hover {
+        color: var(--desaturated-dark-cyan);
+        cursor: pointer;
+    }
+    .job_skills span:hover{
+        cursor: pointer;
+        background-color: var(--desaturated-dark-cyan);
+        color: #FFF;
+    }
+
 </style>
