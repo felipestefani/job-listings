@@ -20,16 +20,9 @@
     const clear = () => { filter.value = []}
 
     const allFilter = job => {
-        let fullList = []
-        fullList.value = [job.role, job.level, ...job.languages]
-        if(filter.value.length <= 0) {
-            return true
-        } else {
-            const tamanho = filter.value.filter( item => {
-                return fullList.value.includes(item)
-            })
-            return tamanho.length == filter.value.length
-        }
+        const fullList = [job.role, job.level, ...job.languages]
+        const skills = filter.value.filter( item => fullList.includes(item))
+        return skills.length == filter.value.length
     }
 
 </script>
