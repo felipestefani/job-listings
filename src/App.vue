@@ -5,19 +5,10 @@
 
     const filter = ref([])
 
-    function getImageUrl(filename) {
-        return import.meta.env.BASE_URL + 'src/assets/' + filename;
-    }
-
-    const addFilter = job_filter => {
-        !filter.value.includes(job_filter) ? filter.value = [...filter.value, job_filter] : null
-    }
-
-    const removeFilter = job_filter_remove => {
-        filter.value = filter.value.filter(item => item!==job_filter_remove)
-    }
-
-    const clear = () => { filter.value = []}
+    const getImageUrl = filename =>  import.meta.env.BASE_URL + 'src/assets/' + filename
+    const addFilter = job_filter => !filter.value.includes(job_filter) ? filter.value = [...filter.value, job_filter] : null
+    const removeFilter = job_filter_remove => filter.value = filter.value.filter(item => item!==job_filter_remove)
+    const clear = () =>  filter.value = []
 
     const allFilter = job => {
         const fullList = [job.role, job.level, ...job.languages]
