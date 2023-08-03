@@ -5,7 +5,11 @@
 
     const filter = ref([])
 
-    const getImageUrl = filename =>  import.meta.env.BASE_URL + 'src/assets/' + filename
+    // const getImageUrl = filename =>  import.meta.env.BASE_URL + 'src/assets/' + filename
+    const getImageUrl = filename =>  {
+        const baseUrl = import.meta.env.PROD ? '/job-listings/' : '/'
+        return baseUrl + 'src/' + filename
+    }
     const addFilter = job_filter => !filter.value.includes(job_filter) ? filter.value = [...filter.value, job_filter] : null
     const removeFilter = job_filter_remove => filter.value = filter.value.filter(item => item!==job_filter_remove)
     const clear = () =>  filter.value = []
@@ -37,8 +41,7 @@
                     <li class="job_li" v-for="job in jobs" :key="job.id" :hidden="!allFilter(job)" :class="{line_green1: job.new && job.featured}">
                         <div class="job">
                             <div class="job_description line" >
-                                <img :src="`./assets/${job.logo}`" alt="">   
-                                <!-- <img :src="getImageUrl(job.logo)" alt="">    -->
+                                <img :src="getImageUrl(job.logo)" alt="">   
                                 <div class="all_descriptions">
                                     <div class="li_header">
                                         <span class="company">{{ job.company }}</span>
