@@ -5,7 +5,7 @@
 
     const filter = ref([])
 
-    const getImageUrl = filename =>  import.meta.env.BASE_URL + 'src/assets/' + filename
+    const getImageUrl = filename =>  import.meta.env.BASE_URL + 'public/' + filename
     const addFilter = job_filter => !filter.value.includes(job_filter) ? filter.value = [...filter.value, job_filter] : null
     const removeFilter = job_filter_remove => filter.value = filter.value.filter(item => item!==job_filter_remove)
     const clear = () =>  filter.value = []
@@ -20,12 +20,12 @@
 <template>
     <div class="container">
         <header>
-            <img class="desktop_image_header" src="./assets/images/bg-header-desktop.svg" alt="desktop header backgound">
-            <img class="mobile_image_header" src="./assets/images/bg-header-mobile.svg" alt="mobile header backgound" hidden>
+            <img class="desktop_image_header" src="../public/images/bg-header-desktop.svg" alt="desktop header backgound">
+            <img class="mobile_image_header" src="../public/images/bg-header-mobile.svg" alt="mobile header backgound" hidden>
             <div class="filter"  v-if="filter.length >=1 ">
                 <ul class="list_filter">
                     <div class="items_filter">
-                        <li class="li_items_filter" v-for="item in filter">{{ item }} <button @click="removeFilter(item)"><img src="./assets/images/icon-remove.svg" alt="remove filter"></button></li>
+                        <li class="li_items_filter" v-for="item in filter">{{ item }} <button @click="removeFilter(item)"><img src="../public/images/icon-remove.svg" alt="remove filter"></button></li>
                     </div>
                     <button class="clear" @click="clear">Clear</button>
                 </ul>
