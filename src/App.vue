@@ -9,7 +9,7 @@
     const getImageUrl = filename =>  {
         const baseUrl = import.meta.env.PROD ? '/job-listings/' : '/'
         // return baseUrl + 'src/assets/' + filename
-        return baseUrl + `src/assets/` + filename
+        return baseUrl + `assets/` + filename
     }
     const addFilter = job_filter => !filter.value.includes(job_filter) ? filter.value = [...filter.value, job_filter] : null
     const removeFilter = job_filter_remove => filter.value = filter.value.filter(item => item!==job_filter_remove)
