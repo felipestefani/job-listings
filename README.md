@@ -34,8 +34,8 @@ Users should be able to:
 
 ### Screenshot
 
-![](./public/main.png)
-![](./public/filter.png)
+![](./src/assets/main.png)
+![](./src/assets/filter.png)
 
 ### Links
 
