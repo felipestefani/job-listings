@@ -40,7 +40,7 @@ Users should be able to:
 ### Links
 
 - Solution URL: [https://github.com/felipestefani/job-listings](https://github.com/felipestefani/job-listings)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Live Site URL: [https://felipestefani.github.io/job-listings/](https://felipestefani.github.io/job-listings/)
 
 ## My process
 
