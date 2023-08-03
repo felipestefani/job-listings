@@ -5,7 +5,7 @@
 
     const filter = ref([])
 
-    const getImageUrl = filename =>  import.meta.env.BASE_URL + 'public/' + filename
+    const getImageUrl = filename =>  import.meta.env.BASE_URL + filename
     const addFilter = job_filter => !filter.value.includes(job_filter) ? filter.value = [...filter.value, job_filter] : null
     const removeFilter = job_filter_remove => filter.value = filter.value.filter(item => item!==job_filter_remove)
     const clear = () =>  filter.value = []
