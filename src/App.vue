@@ -15,17 +15,17 @@
         const skills = filter.value.filter( item => fullList.includes(item))
         return skills.length == filter.value.length
     }
-
 </script>
 
 <template>
     <div class="container">
         <header>
-            <img src="./assets/images/bg-header-desktop.svg" alt="desktop header backgound">
+            <img class="desktop_image_header" src="./assets/images/bg-header-desktop.svg" alt="desktop header backgound">
+            <img class="mobile_image_header" src="./assets/images/bg-header-mobile.svg" alt="mobile header backgound" hidden>
             <div class="filter"  v-if="filter.length >=1 ">
                 <ul class="list_filter">
                     <div class="items_filter">
-                        <li v-for="item in filter">{{ item }} <button @click="removeFilter(item)"><img src="./assets/images/icon-remove.svg" alt=""></button></li>
+                        <li class="li_items_filter" v-for="item in filter">{{ item }} <button @click="removeFilter(item)"><img src="./assets/images/icon-remove.svg" alt="remove filter"></button></li>
                     </div>
                     <button class="clear" @click="clear">Clear</button>
                 </ul>
@@ -34,10 +34,9 @@
         <main>
             <div>
                 <ul class="jobs">
-                    <li class="job_li" v-for="job in jobs" :key="job.id" :hidden="!allFilter(job)">
+                    <li class="job_li" v-for="job in jobs" :key="job.id" :hidden="!allFilter(job)" :class="{line_green1: job.new && job.featured}">
                         <div class="job">
-                            <div class="job_description">
-                                <div class="line" :class="{line_green: job.new && job.featured}"></div>
+                            <div class="job_description line" >
                                 <img :src="getImageUrl(job.logo)" alt="">   
                                 <div class="all_descriptions">
                                     <div class="li_header">
@@ -53,6 +52,7 @@
                                     </div>
                                 </div>
                             </div>  
+                            <hr>
                             <div class="job_skills">
                                 <span class="role" @click="addFilter(job.role)">{{ job.role }}</span>
                                 <span class="level" @click="addFilter(job.level)">{{ job.level }}</span>
@@ -78,11 +78,11 @@
         position: relative;
     }
     header {
-        position: relative;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        width: 100%;
     }
     header img {
         width: 100%;
@@ -94,41 +94,46 @@
         min-width: 45em;
     }
     .list_filter{
-        position: absolute;
         display: flex;
+        margin-top: -2em;
         justify-content: space-between;
-        bottom: -2em;
-        left: 50%;
-        transform: translate(-50%,0);
         border-radius: 5px;
         background-color: #FFF;
         list-style-type: none;
-        width: 80%;
-        max-width: 80em;
-        min-width: 45em;
         padding: 0.5em;
     }
     .items_filter{
         display: flex;
+        flex-wrap: wrap;
     }
-    .list_filter li{
+    .li_items_filter{
         color: var(--desaturated-dark-cyan);
         background-color: var(--light-grayish-cyan-background);
         border-radius: 5px;
-        padding: 0.5em;
+        padding-left: 0.5em;
         margin: 0.5em;
         list-style: none;
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+    }
+    .li_items_filter img{
+        background-color: transparent;
     }
     button {
         border: none;
         background: none;
     }
+    .li_items_filter button{
+        padding:0.5em;
+        border-radius: 0 5px 5px 0;
+        margin-left: 0.5em;
+        background-color: var(--desaturated-dark-cyan);
+        height: 100%;
+    }
     .clear{
         margin-right: 2em;
         color: var(--dark-grayish-cyan);
-    }
-    button img {
-        height: 100%;
     }
     .jobs {
         list-style-type: none;      
@@ -143,31 +148,28 @@
         width: 80%;
         min-width: 45em;
         max-width: 80em;
-        margin: 1em 0;
+        margin-bottom: 1em;
         box-shadow: 0px 10px 20px var(--desaturated-dark-cyan-shadow);
         height: 100%;
     }
     .job{
         display: flex;
         justify-content: space-between;
-        align-items: center;  
+        align-items: center;
     }
     .job_description {
         display: flex;
         align-items: center;
         width: 50%;
+        padding: 1em 0;
     }
-    .line, .line_green {
-        width: 5px;
-        height: 10em;
-        border-radius: 10px 0 0 10px;
-        margin-right: 2em;
-    }
-    .line_green {
-        background-color: var(--desaturated-dark-cyan);
+    .line_green1 {
+        height: 100%;
+        border-radius: 5px;
+        border-left: 6px solid var(--desaturated-dark-cyan);
     }
     .job_description img {
-        margin-right: 1em;
+        margin: 0 1em 0 2em;
     }
     .all_descriptions {
         display: flex;
@@ -200,6 +202,7 @@
     p {
         font-size: 18px;
         color: var(--very-dark-grayish-cyan);
+        font-weight: 700;
     }
     .li_footer {
         color: var(--dark-grayish-cyan);
@@ -247,8 +250,9 @@
     }
     .attribution a { color: hsl(228, 45%, 44%); }
 
-    button img:hover {
+    .li_items_filter button:hover {
         cursor: pointer;
+        background-color: var(--very-dark-grayish-cyan);
     }
     .clear:hover {
         color: var(--desaturated-dark-cyan);
@@ -263,6 +267,59 @@
         cursor: pointer;
         background-color: var(--desaturated-dark-cyan);
         color: #FFF;
+    }
+
+    @media (max-width: 750px) {
+        .desktop_image_header{
+            display: none;
+        }
+        .mobile_image_header{
+            display: inline-block;
+            height: 10em;
+        }
+        .filter{
+            min-width: 0em;
+        }
+        .jobs{
+            margin-top: 1em;
+            gap: 2em;
+        }
+        .list_filter, .job_li{
+            min-width: 0;
+        }
+        .job{
+            flex-direction: column;
+        }
+        .job_description img {
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            top: -1.5em;
+            left: 1em;
+            width: 3em;
+        }
+        .job_description, .job_skills {
+            position: relative;
+            width: 100%;
+            padding-top: 2em;
+            padding-left: 1em;
+        }
+        .company{
+            padding-right: 1em;
+        }
+        .li_footer{
+            justify-content: flex-start;
+        }
+        hr {
+            width: 90%;
+            align-self: self-start;
+            margin: 0.5em 0 1em 1em;
+        }
+        .job_skills {
+            justify-content: flex-start;
+            margin: 0;
+            padding: 0 1em 1em 0.5em;
+        }
     }
 
 </style>
